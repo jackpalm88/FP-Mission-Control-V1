@@ -1,0 +1,8 @@
+# Future port with app-owned authentication. DNS/HTTPS not provisioned by this export.
+{$APP_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy app:3000 {
+        # Never trust visitor-provided Sites identity in the independent deployment.
+        header_up -oai-authenticated-user-*
+    }
+}
